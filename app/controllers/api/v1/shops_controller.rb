@@ -1,4 +1,4 @@
-class ShopsController < ApplicationController
+class Api::V1::ShopsController < ApplicationController
   before_action :set_shop, only: [:show, :update, :destroy]
 
   # GET /shops
@@ -18,7 +18,7 @@ class ShopsController < ApplicationController
     @shop = Shop.new(shop_params)
 
     if @shop.save
-      render json: @shop, status: :created, location: @shop
+      render json: @shop, status: :created, location: api_v1_shop_url(@shop)
     else
       render json: @shop.errors, status: :unprocessable_entity
     end
