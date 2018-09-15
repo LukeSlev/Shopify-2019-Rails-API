@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Products', type: :request do
+RSpec.describe 'Products API', type: :request do
   # Initialize the test data
   let!(:shop) { create(:shop) }
   let!(:products) { create_list(:product, 20, shop_id: shop.id) }
