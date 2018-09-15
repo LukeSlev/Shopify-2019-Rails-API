@@ -9,7 +9,7 @@ RSpec.describe 'Orders', type: :request do
 
   # Test suite for GET /api/v1/shops/:shop_id/orders
   describe 'GET /api/v1/shops/:shop_id/orders' do
-    before { get "/api/v1/shops/#{shop_id}/orders" }
+    before { get api_v1_shop_orders_path(shop_id: shop_id) }
 
     context 'when shop exists' do
       it 'returns status code 200' do
@@ -66,7 +66,7 @@ RSpec.describe 'Orders', type: :request do
     let(:valid_attributes) { { order: { date: Faker::Date.between(2.days.ago, Date.today), shop_id: shop_id } } }
 
     context 'when request attributes are valid' do
-      before { post "/api/v1/shops/#{shop_id}/orders", params: valid_attributes }
+      before { post api_v1_shop_orders_path(shop_id: shop_id), params: valid_attributes }
 
       it 'returns status code 201' do
         expect(response).to have_http_status(201)
@@ -74,7 +74,7 @@ RSpec.describe 'Orders', type: :request do
     end
 
     context 'when an invalid request' do
-      before { post "/api/v1/shops/#{shop_id}/orders", params: { order: { wrong: 'idk'} } }
+      before { post api_v1_shop_orders_path(shop_id: shop_id), params: { order: { wrong: 'idk'} } }
 
       it 'returns status code 422' do
         expect(response).to have_http_status(422)
