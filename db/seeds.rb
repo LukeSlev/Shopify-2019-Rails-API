@@ -5,3 +5,9 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+Shop.create(name: 'HelloWorld')
+
+Order.create(date: DateTime.new(2012, 8, 29, 22, 35, 0))
+
+Product.create(name: 'milk', cost: BigDecimal('20.00'))
