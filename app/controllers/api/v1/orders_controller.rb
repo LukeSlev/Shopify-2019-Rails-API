@@ -1,4 +1,5 @@
 class Api::V1::OrdersController < ApplicationController
+  before_action :set_shop
   before_action :set_order, only: [:show, :update, :destroy]
 
   # GET /orders
@@ -18,7 +19,7 @@ class Api::V1::OrdersController < ApplicationController
     @order = Order.new(order_params)
 
     if @order.save
-      render json: @order, status: :created, location: api_v1_order_url(@order)
+      render json: @order, status: :created, location: api_v1_shop_orders_url(@order)
     else
       render json: @order.errors, status: :unprocessable_entity
     end
@@ -39,13 +40,18 @@ class Api::V1::OrdersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_order
-      @order = Order.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def order_params
-      params.require(:order).permit(:date, :shop_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_shop
+    @shop = Shop.find(params[:shop_id])
+  end
+
+  def set_order
+    @order = @shop.orders.find_by!(id: params[:id]) if @shop
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def order_params
+    params.require(:order).permit(:date, :shop_id)
+  end
 end
