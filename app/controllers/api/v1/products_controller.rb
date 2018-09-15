@@ -1,16 +1,17 @@
 class Api::V1::ProductsController < ApplicationController
+  before_action :set_shop
   before_action :set_product, only: [:show, :update, :destroy]
 
   # GET /products
   def index
-    @products = Product.all
+    @products = @shop.products
 
-    render json: @products
+    render json: @products, status: :ok
   end
 
   # GET /products/1
   def show
-    render json: @product
+    render json: @product, status: :ok
   end
 
   # POST /products
@@ -18,7 +19,7 @@ class Api::V1::ProductsController < ApplicationController
     @product = Product.new(product_params)
 
     if @product.save
-      render json: @product, status: :created, location: api_v1_product_url(@product)
+      render json: @product, status: :created, location: api_v1_shop_products_url(@product)
     else
       render json: @product.errors, status: :unprocessable_entity
     end
@@ -27,7 +28,7 @@ class Api::V1::ProductsController < ApplicationController
   # PATCH/PUT /products/1
   def update
     if @product.update(product_params)
-      render json: @product
+      render json: @product, status: :ok
     else
       render json: @product.errors, status: :unprocessable_entity
     end
@@ -39,13 +40,18 @@ class Api::V1::ProductsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_product
-      @product = Product.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def product_params
-      params.require(:product).permit(:name, :cost, :shop_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_shop
+    @shop = Shop.find(params[:shop_id])
+  end
+
+  def set_product
+    @product = @shop.products.find_by!(id: params[:id]) if @shop
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def product_params
+    params.require(:product).permit(:name, :cost, :shop_id)
+  end
 end
