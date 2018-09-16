@@ -1,30 +1,30 @@
 require "rails_helper"
 
-RSpec.describe ShopsController, type: :routing do
+RSpec.describe Api::V1::ShopsController, type: :routing do
   describe "routing" do
     it "routes to #index" do
-      expect(:get => "/shops").to route_to("shops#index")
+      expect(:get => "/api/v1/shops").to route_to("api/v1/shops#index")
     end
 
     it "routes to #show" do
-      expect(:get => "/shops/1").to route_to("shops#show", :id => "1")
+      expect(:get => "/api/v1/shops/1").to route_to("api/v1/shops#show", :id => "1")
     end
 
 
     it "routes to #create" do
-      expect(:post => "/shops").to route_to("shops#create")
+      expect(:post => "/api/v1/shops").to route_to("api/v1/shops#create")
     end
 
     it "routes to #update via PUT" do
-      expect(:put => "/shops/1").to route_to("shops#update", :id => "1")
+      expect(:put => "/api/v1/shops/1").to route_to("api/v1/shops#update", :id => "1")
     end
 
     it "routes to #update via PATCH" do
-      expect(:patch => "/shops/1").to route_to("shops#update", :id => "1")
+      expect(:patch => "/api/v1/shops/1").to route_to("api/v1/shops#update", :id => "1")
     end
 
     it "routes to #destroy" do
-      expect(:delete => "/shops/1").to route_to("shops#destroy", :id => "1")
+      expect(:delete => "/api/v1/shops/1").to route_to("api/v1/shops#destroy", :id => "1")
     end
   end
 end
