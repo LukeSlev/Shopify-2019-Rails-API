@@ -16,7 +16,7 @@ class Api::V1::ProductsController < ApplicationController
 
   # POST /products
   def create
-    @product = Product.new(product_params)
+    @product = Product.new(product_params.reverse_merge(shop_id: params['shop_id']))
 
     if @product.save
       render json: @product, status: :created, location: api_v1_shop_products_url(@product)

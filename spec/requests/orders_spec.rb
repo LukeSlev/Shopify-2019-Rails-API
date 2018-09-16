@@ -63,7 +63,7 @@ RSpec.describe 'Orders API', type: :request do
 
   # Test suite for PUT /api/v1/shops/:shop_id/orders
   describe 'POST /api/v1/shops/:shop_id/orders' do
-    let(:valid_attributes) { { order: { date: Faker::Date.between(2.days.ago, Date.today), shop_id: shop_id } } }
+    let(:valid_attributes) { { order: { date: Faker::Date.between(2.days.ago, Date.today)} } }
 
     context 'when request attributes are valid' do
       before { post api_v1_shop_orders_path(shop_id: shop_id), params: valid_attributes }
@@ -81,7 +81,7 @@ RSpec.describe 'Orders API', type: :request do
       end
 
       it 'returns a failure message' do
-        expect(response.body).to match(/{\"shop\":\[\"must exist\"\],\"date\":\[\"can't be blank\"\]}/)
+        expect(response.body).to match(/{\"date\":\[\"can't be blank\"\]}/)
       end
     end
   end

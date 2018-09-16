@@ -16,7 +16,7 @@ class Api::V1::OrdersController < ApplicationController
 
   # POST /orders
   def create
-    @order = Order.new(order_params)
+    @order = Order.new(order_params.reverse_merge(shop_id: params['shop_id']))
 
     if @order.save
       render json: @order, status: :created, location: api_v1_shop_orders_url(@order)

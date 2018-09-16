@@ -117,7 +117,6 @@ RSpec.describe 'LineItems API', type: :request do
       end
 
       it 'updates the order' do
-        binding.pry
         updated_line_item = LineItem.find(id)
         expect(updated_line_item.quantity).to eq(quantity)
       end

@@ -64,7 +64,7 @@ RSpec.describe 'Products API', type: :request do
   # Test suite for PUT /api/v1/shops/:shop_id/products
   describe 'POST /api/v1/shops/:shop_id/products' do
     let(:cost) { Faker::Number.decimal(2) }
-    let(:valid_attributes) { { product: { name: 'taco', cost: cost, shop_id: shop_id } } }
+    let(:valid_attributes) { { product: { name: 'taco', cost: cost} } }
 
     context 'when request attributes are valid' do
       before { post api_v1_shop_products_path(shop_id: shop_id), params: valid_attributes }
@@ -82,7 +82,7 @@ RSpec.describe 'Products API', type: :request do
       end
 
       it 'returns a failure message' do
-        expect(response.body).to match(/{\"shop\":\[\"must exist\"\],\"name\":\[\"can't be blank\"\],\"cost\":\[\"can't be blank\"\]}/)
+        expect(response.body).to match(/{\"name\":\[\"can't be blank\"\],\"cost\":\[\"can't be blank\"\]}/)
       end
     end
   end
