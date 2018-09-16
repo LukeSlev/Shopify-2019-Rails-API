@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 ### Shops
-shop = Shop.create(name: 'HelloWorld')
+shop = Shop.create(name: 'HelloWorld', created_by: 'john')
 
 ### Orders
 order = Order.create(date: DateTime.new(2012, 8, 29, 22, 35, 0), shop_id: shop.id)

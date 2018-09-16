@@ -51,7 +51,7 @@ RSpec.describe 'Shops API', type: :request do
   # Test suite for POST /api/v1/shops
   describe 'POST /api/v1/shops' do
     # valid payload
-    let(:valid_attributes) { { shop: { name: 'Learn Elm Shop' } } }
+    let(:valid_attributes) { { shop: { name: 'Learn Elm Shop', created_by: 'some guy' } } }
 
     context 'when the request is valid' do
       before { post api_v1_shops_path, params: valid_attributes }
@@ -73,7 +73,6 @@ RSpec.describe 'Shops API', type: :request do
       end
 
       it 'returns a validation failure message' do
-        binding.pry
         expect(JSON.parse(response.body)['name'].to_s)
           .to match(/can't be blank/)
       end
