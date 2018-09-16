@@ -52,6 +52,6 @@ class Api::V1::OrdersController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def order_params
-    params.require(:order).permit(:date, :shop_id)
+    params.require(:order).permit(:date)
   end
 end

@@ -10,7 +10,10 @@ class LineItem < ApplicationRecord
 
   before_save :set_total
 
-  after_save :check_product
+  after_save :update_order_total
+
+  before_destroy :decrease_total
+
 
   private
 
@@ -18,8 +21,17 @@ class LineItem < ApplicationRecord
     self.total = cost * quantity
   end
 
-  def check_product
-    cost = product.cost if cost != product.cost
-    name = product.name if name != product.name
+  def update_order_total
+    new_total = order.line_items.sum(:total)
+
+    return if order.total == new_total
+
+    order.total = new_total
+    order.save
+  end
+
+  def decrease_total
+    order.total -= total
+    order.save
   end
 end

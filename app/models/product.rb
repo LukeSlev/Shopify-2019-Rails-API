@@ -13,8 +13,12 @@ class Product < ApplicationRecord
 
   def check_line_item
     line_items.each do |li|
+      next if cost != li.cost && li.name != name
+
       li.cost = cost if cost != li.cost
       li.name = name if name != li.name
+
+      li.save
     end
   end
 end
