@@ -6,8 +6,11 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+### Users
+user = User.create(name: 'Eduardo', email: 'ed@email.com', password_digest: 'thats a big password man')
+
 ### Shops
-shop = Shop.create(name: 'HelloWorld', created_by: 'john')
+shop = Shop.create(name: 'HelloWorld', created_by: user.id)
 
 ### Orders
 order = Order.create(date: DateTime.new(2012, 8, 29, 22, 35, 0), shop_id: shop.id)

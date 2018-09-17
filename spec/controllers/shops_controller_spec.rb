@@ -125,5 +125,4 @@ RSpec.describe Api::V1::ShopsController, type: :controller do
       }.to change(Shop, :count).by(-1)
     end
   end
-
 end

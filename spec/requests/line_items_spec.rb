@@ -2,7 +2,9 @@ require 'rails_helper'
 
 RSpec.describe 'LineItems API', type: :request do
   # Initialize the test data
-  let!(:shop) { create(:shop) }
+  let(:user) { create(:user) }
+
+  let!(:shop) { create(:shop, created_by: user.id) }
   let!(:order) { create(:order, shop_id: shop.id) }
   let!(:product) { create(:product, shop_id: shop.id) }
   let!(:line_items) { create_list(:line_item, 20, order_id: order.id, product_id: product.id) }
@@ -11,9 +13,12 @@ RSpec.describe 'LineItems API', type: :request do
   let(:product_id) { product.id }
   let(:id) { line_items.first.id }
 
+  # authorize request
+  let(:headers) { valid_headers }
+
   # Test suite for GET /api/v1/shops/:shop_id/orders/:order_id/line_items
   describe 'GET /api/v1/shops/:shop_id/orders/:order_id/line_items' do
-    before { get api_v1_shop_order_line_items_path(shop_id: shop_id, order_id: order_id) }
+    before { get api_v1_shop_order_line_items_path(shop_id: shop_id, order_id: order_id), params: {}, headers: headers }
 
     context 'when shop exists' do
       context 'when the order exists' do
@@ -54,7 +59,7 @@ RSpec.describe 'LineItems API', type: :request do
 
   # Test suite for GET /api/v1/shops/:shop_id/orders/:order_id/line_items/:id
   describe 'GET /api/v1/shops/:shop_id/orders/:order_id/line_items/:id' do
-    before { get "/api/v1/shops/#{shop_id}/orders/#{order_id}/line_items/#{id}" }
+    before { get "/api/v1/shops/#{shop_id}/orders/#{order_id}/line_items/#{id}", params: {}, headers: headers }
 
     context 'when product exists' do
       it 'returns status code 200' do
@@ -81,10 +86,10 @@ RSpec.describe 'LineItems API', type: :request do
 
   # Test suite for PUT /api/v1/shops/:shop_id/orders/:order_id/line_items
   describe 'POST /api/v1/shops/:shop_id/orders/:order_id/line_items' do
-    let(:valid_attributes) { { line_item: { quantity: Faker::Number.number(2), product_id: product_id } } }
+    let(:valid_attributes) { { line_item: { quantity: Faker::Number.number(2), product_id: product_id } }.to_json }
 
     context 'when request attributes are valid' do
-      before { post api_v1_shop_order_line_items_path(shop_id: shop_id, order_id: order_id), params: valid_attributes }
+      before { post api_v1_shop_order_line_items_path(shop_id: shop_id, order_id: order_id), params: valid_attributes, headers: headers }
 
       it 'returns status code 201' do
         expect(response).to have_http_status(201)
@@ -92,7 +97,8 @@ RSpec.describe 'LineItems API', type: :request do
     end
 
     context 'when an invalid request' do
-      before { post api_v1_shop_order_line_items_path(shop_id: shop_id, order_id: order_id), params: { line_item: { name: 'idk', product_id: product_id} } }
+      let(:invalid_params) { { line_item: { name: 'idk', product_id: product_id} }.to_json }
+      before { post api_v1_shop_order_line_items_path(shop_id: shop_id, order_id: order_id), params: invalid_params, headers: headers }
 
       it 'returns status code 422' do
         expect(response).to have_http_status(422)
@@ -107,9 +113,9 @@ RSpec.describe 'LineItems API', type: :request do
   # Test suite for PUT /api/v1/shops/:shop_id/orders/:order_id/line_items/:id
   describe 'PUT /api/v1/shops/:shop_id/orders/:order_id/line_items/:id' do
     let(:quantity) { Faker::Number.number(2).to_i }
-    let(:valid_attributes) { { line_item: { quantity: quantity } } }
+    let(:valid_attributes) { { line_item: { quantity: quantity } }.to_json }
 
-    before { put "/api/v1/shops/#{shop_id}/orders/#{order_id}/line_items/#{id}", params: valid_attributes }
+    before { put "/api/v1/shops/#{shop_id}/orders/#{order_id}/line_items/#{id}", params: valid_attributes, headers: headers }
 
     context 'when order exists' do
       it 'returns status code 200' do
@@ -137,7 +143,7 @@ RSpec.describe 'LineItems API', type: :request do
 
   # Test suite for DELETE /api/v1/shops/:id
   describe 'DELETE /api/v1/shops/:id' do
-    before { delete "/api/v1/shops/#{shop_id}/orders/#{order_id}/line_items/#{id}" }
+    before { delete "/api/v1/shops/#{shop_id}/orders/#{order_id}/line_items/#{id}", params: {}, headers: headers }
 
     it 'returns status code 204' do
       expect(response).to have_http_status(204)

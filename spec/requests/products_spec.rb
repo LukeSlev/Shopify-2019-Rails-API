@@ -2,14 +2,18 @@ require 'rails_helper'
 
 RSpec.describe 'Products API', type: :request do
   # Initialize the test data
-  let!(:shop) { create(:shop) }
+  let(:user) { create(:user) }
+  let!(:shop) { create(:shop, created_by: user.id) }
   let!(:products) { create_list(:product, 20, shop_id: shop.id) }
   let(:shop_id) { shop.id }
   let(:id) { products.first.id }
 
+  # authorize request
+  let(:headers) { valid_headers }
+
   # Test suite for GET /api/v1/shops/:shop_id/products
   describe 'GET /api/v1/shops/:shop_id/products' do
-    before { get api_v1_shop_products_path(shop_id: shop_id) }
+    before { get api_v1_shop_products_path(shop_id: shop_id), params: {}, headers: headers }
 
     context 'when shop exists' do
       it 'returns status code 200' do
@@ -36,7 +40,7 @@ RSpec.describe 'Products API', type: :request do
 
   # Test suite for GET /api/v1/shops/:shop_id/products/:id
   describe 'GET /api/v1/shops/:shop_id/products/:id' do
-    before { get "/api/v1/shops/#{shop_id}/products/#{id}" }
+    before { get "/api/v1/shops/#{shop_id}/products/#{id}", params: {}, headers: headers }
 
     context 'when product exists' do
       it 'returns status code 200' do
@@ -64,10 +68,10 @@ RSpec.describe 'Products API', type: :request do
   # Test suite for PUT /api/v1/shops/:shop_id/products
   describe 'POST /api/v1/shops/:shop_id/products' do
     let(:cost) { Faker::Number.decimal(2) }
-    let(:valid_attributes) { { product: { name: 'taco', cost: cost} } }
+    let(:valid_attributes) { { product: { name: 'taco', cost: cost} }.to_json }
 
     context 'when request attributes are valid' do
-      before { post api_v1_shop_products_path(shop_id: shop_id), params: valid_attributes }
+      before { post api_v1_shop_products_path(shop_id: shop_id), params: valid_attributes, headers: headers }
 
       it 'returns status code 201' do
         expect(response).to have_http_status(201)
@@ -75,7 +79,7 @@ RSpec.describe 'Products API', type: :request do
     end
 
     context 'when an invalid request' do
-      before { post api_v1_shop_products_path(shop_id: shop_id), params: { product: {wrong: 'idk'} } }
+      before { post api_v1_shop_products_path(shop_id: shop_id), params: { product: {wrong: 'idk'} }.to_json, headers: headers }
 
       it 'returns status code 422' do
         expect(response).to have_http_status(422)
@@ -89,9 +93,9 @@ RSpec.describe 'Products API', type: :request do
 
   # Test suite for PUT /api/v1/shops/:shop_id/products/:id
   describe 'PUT /api/v1/shops/:shop_id/products/:id' do
-    let(:valid_attributes) { { product: { name: 'Mozart Music' } } }
+    let(:valid_attributes) { { product: { name: 'Mozart Music' } }.to_json }
 
-    before { put "/api/v1/shops/#{shop_id}/products/#{id}", params: valid_attributes }
+    before { put "/api/v1/shops/#{shop_id}/products/#{id}", params: valid_attributes, headers: headers }
 
     context 'when product exists' do
       it 'returns status code 204' do
@@ -119,7 +123,7 @@ RSpec.describe 'Products API', type: :request do
 
   # Test suite for DELETE /api/v1/shops/:id
   describe 'DELETE /api/v1/shops/:id' do
-    before { delete "/api/v1/shops/#{shop_id}/products/#{id}" }
+    before { delete "/api/v1/shops/#{shop_id}/products/#{id}", params: {}, headers: headers }
 
     it 'returns status code 204' do
       expect(response).to have_http_status(204)
