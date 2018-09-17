@@ -5,7 +5,7 @@ class Api::V1::ShopsController < ApplicationController
 
   # GET /shops
   def index
-    @shops = Shop.all
+    @shops = current_user.shops
 
     render json: @shops, status: :ok
   end
@@ -17,7 +17,7 @@ class Api::V1::ShopsController < ApplicationController
 
   # POST /shops
   def create
-    @shop = Shop.new(shop_params)
+    @shop = current_user.shops.new(shop_params)
 
     if @shop.save
       render json: @shop, status: :created, location: api_v1_shops_url(@shop)
@@ -44,11 +44,11 @@ class Api::V1::ShopsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_shop
-    @shop = Shop.find(params[:id])
+    @shop = current_user.shops.find_by!(id: params[:shop_id])
   end
 
   # Only allow a trusted parameter "white list" through.
   def shop_params
-    params.require(:shop).permit(:name, :created_by)
+    params.require(:shop).permit(:name)
   end
 end

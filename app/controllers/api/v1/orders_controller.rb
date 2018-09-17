@@ -4,7 +4,7 @@ class Api::V1::OrdersController < ApplicationController
 
   # GET /orders
   def index
-    @orders = Order.all
+    @orders = @shop.orders.all
 
     render json: @orders
   end
@@ -43,7 +43,7 @@ class Api::V1::OrdersController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_shop
-    @shop = Shop.find(params[:shop_id])
+    @shop = current_user.shops.find_by!(id: params[:shop_id])
   end
 
   def set_order
