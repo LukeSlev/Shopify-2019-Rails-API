@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Api::V1::ProductsController</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="../../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/github.css" type="text/css" media="screen" />
+<script src="../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+
+    <meta property="og:title" value="Api::V1::ProductsController">
+
+  
+
+    <meta name="keywords" content="Api::V1::ProductsController class">
+  
+    <meta name="keywords" content="index, show, create, update, destroy">
+  
+</head>
+
+<body>
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span>
+            Api::V1::ProductsController
+            
+                <span class="parent">&lt;
+                    
+                    <a href="../../ApplicationController.html">ApplicationController</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../../files/app/controllers/api/v1/products_controller_rb.html">app/controllers/api/v1/products_controller.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>C</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-create">create</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>D</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-destroy">destroy</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>I</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-index">index</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-show">show</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>U</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-update">update</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+    
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-create">
+            
+              <b>create</b>()
+            
+            <a href="../../../classes/Api/V1/ProductsController.html#method-i-create" name="method-i-create" class="permalink">Link</a>
+          </div>
+
+          
+            <div class="description">
+              <p>POST /products</p>
+            </div>
+          
+
+          
+
+          
+
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source:
+                <a href="javascript:toggleSource('method-i-create_source')" id="l_method-i-create_source">show</a>
+                
+              </p>
+              <div id="method-i-create_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File app/controllers/api/v1/products_controller.rb, line 18</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">create</span>
+  <span class="ruby-ivar">@product</span> = <span class="ruby-constant">Product</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">product_params</span>.<span class="ruby-identifier">reverse_merge</span>(<span class="ruby-value">shop_id:</span> <span class="ruby-identifier">params</span>[<span class="ruby-string">&#39;shop_id&#39;</span>]))
+
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@product</span>.<span class="ruby-identifier">save</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-value">json:</span> <span class="ruby-ivar">@product</span>, <span class="ruby-value">status:</span> <span class="ruby-value">:created</span>, <span class="ruby-value">location:</span> <span class="ruby-identifier">api_v1_shop_products_url</span>(<span class="ruby-ivar">@product</span>)
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-value">json:</span> <span class="ruby-ivar">@product</span>.<span class="ruby-identifier">errors</span>, <span class="ruby-value">status:</span> <span class="ruby-value">:unprocessable_entity</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-destroy">
+            
+              <b>destroy</b>()
+            
+            <a href="../../../classes/Api/V1/ProductsController.html#method-i-destroy" name="method-i-destroy" class="permalink">Link</a>
+          </div>
+
+          
+            <div class="description">
+              <p>DELETE /products/1</p>
+            </div>
+          
+
+          
+
+          
+
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source:
+                <a href="javascript:toggleSource('method-i-destroy_source')" id="l_method-i-destroy_source">show</a>
+                
+              </p>
+              <div id="method-i-destroy_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File app/controllers/api/v1/products_controller.rb, line 38</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">destroy</span>
+  <span class="ruby-ivar">@product</span>.<span class="ruby-identifier">destroy</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-index">
+            
+              <b>index</b>()
+            
+            <a href="../../../classes/Api/V1/ProductsController.html#method-i-index" name="method-i-index" class="permalink">Link</a>
+          </div>
+
+          
+            <div class="description">
+              <p>GET /products</p>
+            </div>
+          
+
+          
+
+          
+
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source:
+                <a href="javascript:toggleSource('method-i-index_source')" id="l_method-i-index_source">show</a>
+                
+              </p>
+              <div id="method-i-index_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File app/controllers/api/v1/products_controller.rb, line 6</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">index</span>
+  <span class="ruby-ivar">@products</span> = <span class="ruby-ivar">@shop</span>.<span class="ruby-identifier">products</span>
+
+  <span class="ruby-identifier">render</span> <span class="ruby-value">json:</span> <span class="ruby-ivar">@products</span>, <span class="ruby-value">status:</span> <span class="ruby-value">:ok</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-show">
+            
+              <b>show</b>()
+            
+            <a href="../../../classes/Api/V1/ProductsController.html#method-i-show" name="method-i-show" class="permalink">Link</a>
+          </div>
+
+          
+            <div class="description">
+              <p>GET /products/1</p>
+            </div>
+          
+
+          
+
+          
+
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source:
+                <a href="javascript:toggleSource('method-i-show_source')" id="l_method-i-show_source">show</a>
+                
+              </p>
+              <div id="method-i-show_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File app/controllers/api/v1/products_controller.rb, line 13</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">show</span>
+  <span class="ruby-identifier">render</span> <span class="ruby-value">json:</span> <span class="ruby-ivar">@product</span>, <span class="ruby-value">status:</span> <span class="ruby-value">:ok</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-update">
+            
+              <b>update</b>()
+            
+            <a href="../../../classes/Api/V1/ProductsController.html#method-i-update" name="method-i-update" class="permalink">Link</a>
+          </div>
+
+          
+            <div class="description">
+              <p>PATCH/PUT /products/1</p>
+            </div>
+          
+
+          
+
+          
+
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source:
+                <a href="javascript:toggleSource('method-i-update_source')" id="l_method-i-update_source">show</a>
+                
+              </p>
+              <div id="method-i-update_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File app/controllers/api/v1/products_controller.rb, line 29</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">update</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@product</span>.<span class="ruby-identifier">update</span>(<span class="ruby-identifier">product_params</span>)
+    <span class="ruby-identifier">render</span> <span class="ruby-value">json:</span> <span class="ruby-ivar">@product</span>, <span class="ruby-value">status:</span> <span class="ruby-value">:ok</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">render</span> <span class="ruby-value">json:</span> <span class="ruby-ivar">@product</span>.<span class="ruby-identifier">errors</span>, <span class="ruby-value">status:</span> <span class="ruby-value">:unprocessable_entity</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+      
+    
+  
+</div>
+
+    </div>
+  </body>
+</html>
