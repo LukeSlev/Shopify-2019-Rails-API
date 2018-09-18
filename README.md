@@ -9,15 +9,17 @@ This rails API was built for the purpose of completing Shopify's Winter 2019 Dev
 
 - Ruby version
      * ruby 2.5.1p57
-
-- System dependencies
-
-- Configuration
-
+     
 - Database creation
-    * sqlite3 v. 3.19.3
+    * uses sqlite3 v. 3.19.3
+    * run `bin/rails db:create`
 
 - Database initialization
+    * run `bin/rails db:migrate`
+    * run ` bin/rails db:seed `
 
 - How to run the test suite
-       * rspec
+    * rspec
+       
+- How to start the API
+    * run `bin/rails s` to start the supper
