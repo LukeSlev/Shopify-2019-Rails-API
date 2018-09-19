@@ -44,7 +44,7 @@ class Api::V1::ShopsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_shop
-    @shop = current_user.shops.find_by!(id: params[:shop_id])
+    @shop = current_user.shops.find_by!(id: params[:id])
   end
 
   # Only allow a trusted parameter "white list" through.
